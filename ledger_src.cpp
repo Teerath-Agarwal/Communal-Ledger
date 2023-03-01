@@ -1,65 +1,39 @@
 // Project Started: 30 March 2022
-// Last worked on: 6 April 2022
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-using namespace std;
+#include "CL.h"
 
-class member
-{
-    public:
-    string name;
-    int money;
-    
-    member(ifstream &k)
-    {
-        k >> name;
-        money = 0;
-    }
+member::member(ifstream &k){
+    k >> name;
+    money = 0;
+}
 
-    void print_money()
-    {
-        cout << abs(money);
-    }
-};
+void member::print_money(){
+    cout << abs(money);
+}
 
-class transaction
-{
-    public:
-    int sno;
-    int date;
-    int amount;
-    string creditor;
-    string debtor;
-    
-    transaction(ifstream &k)
-    {
-        k>>sno;
-        k>>date;
-        k>>creditor;
-        k>>amount;
-        k>>debtor;
-    }
+transaction::transaction(ifstream &k){
+    k>>sno;
+    k>>date;
+    k>>creditor;
+    k>>amount;
+    k>>debtor;
+}
 
-    transaction(vector<member> k, int tn)
-    {
-        int t;
-        sno = tn+1;
-        cout<<"Date in DDMMYY format: ";
-        cin >> date;
-        cout<<"Transaction Amount: ";
-        cin >> amount;
-        for (int i=0; i<k.size(); i++)
-        cout<<(i+1)<<". "<<k[i].name<<"    ";
-        cout<<"\nCreditor: ";
-        cin >> t;
-        creditor = k[t-1].name;
-        cout<<"Debtor: ";
-        cin >> t;
-        debtor = k[t-1].name;
-    }
-};
+transaction::transaction(vector<member> k, int tn){
+    int t;
+    sno = tn+1;
+    cout<<"Date in DDMMYY format: ";
+    cin >> date;
+    cout<<"Transaction Amount: ";
+    cin >> amount;
+    for (int i=0; i<k.size(); i++)
+    cout<<(i+1)<<". "<<k[i].name<<"    ";
+    cout<<"\nCreditor: ";
+    cin >> t;
+    creditor = k[t-1].name;
+    cout<<"Debtor: ";
+    cin >> t;
+    debtor = k[t-1].name;
+}
 
 int digit(int x)
 {
