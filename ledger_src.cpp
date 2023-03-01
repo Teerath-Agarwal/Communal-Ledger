@@ -1,5 +1,5 @@
 // Project Started: 30 March 2022
-// Last worked on: 31 April 2022
+// Last worked on: 6 April 2022
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -63,6 +63,7 @@ class transaction
 
 int digit(int x)
 {
+    if (!x) return 1;
     int k=0;
     while (x>=1)
     {
@@ -185,9 +186,13 @@ void to_settle(vector<member> k, vector<transaction> t)
         if (k[i].money < 0) cout<<" owes  ";
         else cout<<" gets  ";
         cout<<"Rs.";
-        for (int j=0; j<(6-digit(abs(k[i].money))); j++)
-        cout << " ";
-        cout<<abs(k[i].money)<<"/-\n";
+        if (!k[i].money) cout << " ──nil──\n";
+        else
+        {
+            for (int j=0; j<(6-digit(abs(k[i].money))); j++)
+            cout << " ";
+            cout<<abs(k[i].money)<<"/-\n";
+        }
     }
     cout<<"\n\n";
 }
