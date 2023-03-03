@@ -1,4 +1,6 @@
 .vscode/
+.data/
+data/
 *.exe
 *.o
 *.out

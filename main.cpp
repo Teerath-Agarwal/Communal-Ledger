@@ -5,7 +5,7 @@
 int main()
 {
     short int z;
-    system("cd data");
+    // system("cd data");
     cout<<"1. Open existing Ledgers\n2. Create new Ledger\n3. Exit\n-> ";
     cin>>z;
     cin.ignore((numeric_limits<streamsize>::max)(),'\n');
@@ -17,12 +17,20 @@ int main()
             cout<<"Enter a name for the Ledger: ";
             getline(cin,s);
             s += ".cld";
-            system(to_char("touch " + s));
+            system(to_char("touch data/" + s));
             pw = new_pass();
+            break;
         default:
-            file_list();
+            auto fl = file_list();
+            cout<<"Select a ledger to open:\n";
+            for (int i=1; i<=fl.size(); i++) cout<<i<<". "<<fl[i-1]<<'\n';
+            cout<<"-> ";
+            cin>>z;
+            s = fl[z-1] + ".cld";
+            break;
     }
-
+    cout<<"\n"<<s<<" is opened.\n\n";
+    return 0;
     vector<transaction> t;
     vector<member> x;
     read_mem(x);

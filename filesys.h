@@ -1,3 +1,6 @@
+#ifndef FS_H
+#define FS_H
+
 #include "ES.h"
 #include "CL.h"
 
@@ -14,3 +17,5 @@ string exec(const char* cmd);
 string remove_ext(string s);
 
 vector<string> file_list();
+
+#endif

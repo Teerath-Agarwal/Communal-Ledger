@@ -1,5 +1,7 @@
 // Project Started: 30 March 2022
-// Last worked on: 6 April 2022
+#ifndef CL_H
+#define CL_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -49,3 +51,5 @@ void newentry(transaction n);
 int mem_ind(vector<member> k, string s);
 
 void to_settle(vector<member> k, vector<transaction> t);
+
+#endif
