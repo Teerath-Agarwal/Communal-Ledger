@@ -3,7 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
 #include <string>
+#include <array>
 using namespace std;
 
 class member
