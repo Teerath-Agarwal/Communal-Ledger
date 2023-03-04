@@ -21,12 +21,14 @@ string remove_ext(string s){
 }
 
 vector<string> file_list(){
-    stringstream s(exec(to_char("ls")));
+    stringstream s(exec(to_char("ls .data")));
     vector<string> files;
-    while(s.eof()){
+    while(!s.eof()){
         string t;
+        // s >> t;
         getline(s,t);
         files.push_back(remove_ext(t));
     }
+    files.pop_back();
     return files;
 }

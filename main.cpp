@@ -17,7 +17,7 @@ int main()
             cout<<"Enter a name for the Ledger: ";
             getline(cin,s);
             s += ".cld";
-            system(to_char("touch data/" + s));
+            system(to_char("touch .data/" + s));
             pw = new_pass();
             break;
         default:
