@@ -170,3 +170,16 @@ void to_settle(vector<member> k, vector<transaction> t)
     }
     cout<<"\n\n";
 }
+
+void add_new_mem(string s, string pw){
+    cout<<"Enter the number of members you want to add (may change later):\n";
+    int z;
+    cin>>z;
+    cout<<"Enter the names one by one:\n";
+    string name;
+    for (int i=1; i<=z; i++){
+        cout<<i<<".) ";
+        cin>>name;
+
+    }
+}

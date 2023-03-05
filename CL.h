@@ -52,4 +52,6 @@ int mem_ind(vector<member> k, string s);
 
 void to_settle(vector<member> k, vector<transaction> t);
 
+void add_new_mem(string s, string pw);
+
 #endif

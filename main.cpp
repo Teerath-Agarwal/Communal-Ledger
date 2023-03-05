@@ -11,13 +11,16 @@ int main()
     string s,pw;
     fstream nl;
     switch (z){
-        case 3: return 0;
+        case 3:
+            cout<<"\nThank You! Have a beautiful day!\nCode written by Teerath Agarwal";
+            enter();
+            return 0;
         case 2: 
             cout<<"Enter a name for the Ledger: ";
             getline(cin,s);
-            s += ".cld";
-            system(to_char("touch .data/" + s));
+            system(to_char("touch .data/" + s + ".cld"));
             pw = new_pass();
+            add_new_mem(s,pw);
             break;
         default:
             auto fl = file_list();
@@ -25,11 +28,14 @@ int main()
             for (int i=1; i<=fl.size(); i++) cout<<i<<". "<<fl[i-1]<<'\n';
             cout<<"-> ";
             cin>>z;
-            s = fl[z-1] + ".cld";
+            s = fl[z-1];
+            if (!input_pass(".data/" + s + ".cld",pw)) {
+                main();
+                return 0;
+            }
             break;
     }
-    s.resize(s.size()-4);
-    cout<<"\n"<<s<<" is selected.\n\n";
+    cout<<'\n'<<s<<" is opened.\n\n";
 
     vector<transaction> t;
     vector<member> x;
