@@ -5,7 +5,6 @@
 int main()
 {
     short int z;
-    // system("cd data");
     cout<<"1. Open existing Ledgers\n2. Create new Ledger\n3. Exit\n-> ";
     cin>>z;
     cin.ignore((numeric_limits<streamsize>::max)(),'\n');
@@ -29,8 +28,9 @@ int main()
             s = fl[z-1] + ".cld";
             break;
     }
-    cout<<"\n"<<s<<" is opened.\n\n";
-    return 0;
+    s.resize(s.size()-4);
+    cout<<"\n"<<s<<" is selected.\n\n";
+
     vector<transaction> t;
     vector<member> x;
     read_mem(x);
