@@ -78,7 +78,6 @@ template <typename T> vector<T> read_(string path, string pw)
         T temp(k);
         t.push_back(temp);
     }
-    k.close();
     return t;
 }
 
