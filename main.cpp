@@ -43,12 +43,12 @@ int main()
     }
     cout<<'\n'<<led_name<<" is now open.\n\n";
 
-    vector<member> x = read_<member>(mem_path);
-    vector<transaction> t = read_<transaction>(led_path);
+    vector<member> x = read_<member>(mem_path, pw);
+    vector<transaction> t = read_<transaction>(led_path, pw);
 
     while(1)
     {
-        cout<<"1. Enter a new transaction\n2. Display all transactions\n3. Display amount to be settled\n4. Exit\n-> ";
+        cout<<"1. Enter a new transaction\n2. Display all transactions\n3. Display amount to be settled\n4. Add new members\n5. Exit\n-> ";
         cin>>z;
 
         if(z==1)
@@ -56,7 +56,7 @@ int main()
             cout<<endl;
             transaction n(x,t.size());
             t.push_back(n);
-            newentry(n);
+            newentry(n,led_path,pw);
             z=2;
         }
         switch (z)
@@ -65,6 +65,12 @@ int main()
                 print_ledger(t);
             case 3:
                 to_settle(x,t);
+                break;
+            case 4:{
+                    // auto new_mems = add_new_mem(mem_path,pw);
+                    // for (auto &nm:new_mems) x.push_back(member(nm));
+                }
+                for (auto nm:add_new_mem(mem_path,pw)) x.push_back(member(nm));
                 break;
             default:
                 return 0;

@@ -1,7 +1,12 @@
 // Project Started: 30 March 2022
 #include "CL.h"
 
-member::member(ifstream &k){
+member::member(string name){
+    this->name = name;
+    money = 0;
+}
+
+member::member(istream &k){
     k >> name;
     money = 0;
 }
@@ -10,7 +15,7 @@ void member::print_money(){
     cout << abs(money);
 }
 
-transaction::transaction(ifstream &k){
+transaction::transaction(istream &k){
     k>>sno;
     k>>date;
     k>>creditor;
@@ -18,7 +23,7 @@ transaction::transaction(ifstream &k){
     k>>debtor;
 }
 
-transaction::transaction(vector<member> k, int tn){
+transaction::transaction(vector<member> &k, int tn){
     int t;
     sno = tn+1;
     cout<<"Date in DDMMYY format: ";
@@ -61,11 +66,13 @@ int get_digits(int num, int st)
     return num;
 }
 
-template <typename T> vector<T> read_(string path)
+template <typename T> vector<T> read_(string path, string pw)
 {
     vector<T> t;
-    ifstream k;
-    k.open(path);
+    ifstream inp;
+    inp.open(path);
+    string dec = decrypt(decrypt(inp,pw+str_code),pw);
+    stringstream k(dec);
     while (!k.eof())
     {
         T temp(k);
@@ -75,7 +82,7 @@ template <typename T> vector<T> read_(string path)
     return t;
 }
 
-void print_ledger(vector<transaction> t)
+void print_ledger(vector<transaction> &t)
 {
     cout<<endl;
     cout<<"╔═══════╦════════════╦════════════╦═════════════╦════════════╗\n";
@@ -111,27 +118,33 @@ void print_ledger(vector<transaction> t)
     cout<<"╚═══════╩════════════╩════════════╩═════════════╩════════════╝\n";
 }
 
-void newentry(transaction n)
+void newentry(transaction &n, string path, string pw)
 {
-    ofstream k;
-    k.open("Ledger.dat", ios::app);
+    ifstream inp(path);
+    string dec = decrypt(decrypt(inp,pw+str_code),pw);
+    remove(to_char(path));
+    ofstream k(path);
+    k << dec;
+    k.open(path, ios::app);
     k<<"\n"<<n.sno<<" ";
     k<<n.date<<" ";
     k<<n.creditor<<" ";
     k<<n.amount<<" ";
     k<<n.debtor;
     k.close();
+    inp.open(path);
+    enc_algo1(inp,path,pw);
     return;
 }
 
-int mem_ind(vector<member> k, string s)
+int mem_ind(vector<member> &k, string s)
 {
     for (int i=0; i<k.size(); i++)
     if (!s.compare(k[i].name)) return i;
     return -1;
 }
 
-void to_settle(vector<member> k, vector<transaction> t)
+void to_settle(vector<member> &k, vector<transaction> &t)
 {
     for (int i=0; i<t.size(); i++)
     {
@@ -159,7 +172,7 @@ void to_settle(vector<member> k, vector<transaction> t)
     cout<<"\n\n";
 }
 
-void add_new_mem(string mem_path, string pw){
+vector<string> add_new_mem(string mem_path, string pw){
     ifstream inp(mem_path);
     string dec = decrypt(decrypt(inp,pw+str_code),pw);
     vector<string> users;
@@ -193,6 +206,8 @@ void add_new_mem(string mem_path, string pw){
     outp << dec;
     for (auto u:users) outp<<'\n'<<u;
     outp.close();
+    inp.open(mem_path);
+    enc_algo1(inp,mem_path,pw);
     cout<<"\nUsers successfully added!\n\n";
-    return;
+    return users;
 }

@@ -20,7 +20,8 @@ class member
     string name;
     int money;
 
-    member(ifstream &k);
+    member(string name);
+    member(istream &k);
     void print_money();
 };
 
@@ -33,25 +34,25 @@ class transaction
     string creditor;
     string debtor;
     
-    transaction(ifstream &k);
+    transaction(istream &k);
 
-    transaction(vector<member> k, int tn);
+    transaction(vector<member> &k, int tn);
 };
 
 int digit(int x);
 
 int get_digits(int num, int st);
 
-template <typename T> vector<T> read_(string path);
+template <typename T> vector<T> read_(string path, string pw);
 
-void print_ledger(vector<transaction> t);
+void print_ledger(vector<transaction> &t);
 
-void newentry(transaction n);
+void newentry(transaction &n, string path, string pw);
 
-int mem_ind(vector<member> k, string s);
+int mem_ind(vector<member> &k, string s);
 
-void to_settle(vector<member> k, vector<transaction> t);
+void to_settle(vector<member> &k, vector<transaction> &t);
 
-void add_new_mem(string s, string pw);
+vector<string> add_new_mem(string s, string pw);
 
 #endif
