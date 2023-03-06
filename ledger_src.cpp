@@ -66,21 +66,6 @@ int get_digits(int num, int st)
     return num;
 }
 
-template <typename T> vector<T> read_(string path, string pw)
-{
-    vector<T> t;
-    ifstream inp;
-    inp.open(path);
-    string dec = decrypt(decrypt(inp,pw+str_code),pw);
-    stringstream k(dec);
-    while (!k.eof())
-    {
-        T temp(k);
-        t.push_back(temp);
-    }
-    return t;
-}
-
 void print_ledger(vector<transaction> &t)
 {
     cout<<endl;
@@ -182,10 +167,10 @@ vector<string> add_new_mem(string mem_path, string pw){
         getline(filedat,t);
         users_set.insert(t);
     }
-    cout<<"Enter the number of members (max length 10) you want to add (may change later):\n";
+    cout<<"Enter the number of members you want to add (may change later):\n-> ";
     int z;
     cin>>z;
-    cout<<"Enter the names one by one:\n";
+    cout<<"Enter the names (max length 10) one by one:\n";
     string name;
     for (int i=1; i<=z; i++){
         cout<<i<<".) ";

@@ -1,6 +1,7 @@
 #ifndef FS_H
 #define FS_H
 
+#include "CL.h"
 #include "Encryption-Software/ES.h"
 
 #ifdef _WIN32

@@ -12,7 +12,7 @@ int main()
     switch (z){
         case 3:
             cout<<"\nThank You! Have a beautiful day!\nCode written by Teerath Agarwal";
-            enter();
+            enter(0);
             return 0;
         case 2: 
             cout<<"Enter a name for the Ledger: ";
@@ -20,10 +20,13 @@ int main()
             led_path = ".data/" + led_name + ".cld";
             mem_path = ".data/."+ led_name + ".mem";
             system(to_char("touch " + led_path));
+            system(to_char("touch " + mem_path));
             pw = new_pass();
             inp.open(mem_path);
             enc_algo1(inp,mem_path,pw);
             add_new_mem(mem_path,pw);
+            inp.open(led_path);
+            enc_algo1(inp,led_path,pw);
             break;
         default:
             auto fl = file_list();
