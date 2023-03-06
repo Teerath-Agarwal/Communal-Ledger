@@ -1,0 +1,3 @@
+[submodule "Encryption-Software"]
+	path = Encryption-Software
+	url = git@github.com:Teerath-Agarwal/Encryption-Software.git
