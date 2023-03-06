@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <string>
 #include <array>
+#include <set>
+#include "ES.h"
 using namespace std;
 
 class member

@@ -2,7 +2,6 @@
 #define FS_H
 
 #include "ES.h"
-#include "CL.h"
 
 #ifdef _WIN32
 #define pc _pclose

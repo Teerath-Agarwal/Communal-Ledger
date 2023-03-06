@@ -171,7 +171,17 @@ void to_settle(vector<member> k, vector<transaction> t)
     cout<<"\n\n";
 }
 
-void add_new_mem(string s, string pw){
+void add_new_mem(string mem_path, string pw){
+    ifstream inp(mem_path);
+    string dec = decrypt(decrypt(inp,pw+str_code),pw);
+    vector<string> users;
+    set<string> users_set;
+    stringstream filedat(dec);
+    while(!filedat.eof()){
+        string t;
+        getline(filedat,t);
+        users_set.insert(t);
+    }
     cout<<"Enter the number of members you want to add (may change later):\n";
     int z;
     cin>>z;
@@ -180,6 +190,21 @@ void add_new_mem(string s, string pw){
     for (int i=1; i<=z; i++){
         cout<<i<<".) ";
         cin>>name;
-
+        if (users_set.find(name)!=users_set.end()) {
+            cout<< "\nThis username is not available.\n\n";
+            i--;
+        }
+        else {
+            users_set.insert(name);
+            users.push_back(name);
+        }
     }
+    ofstream outp;
+    remove(to_char(mem_path));
+    outp.open(mem_path);
+    outp << dec;
+    for (auto u:users) outp<<'\n'<<u;
+    outp.close();
+    cout<<"\nUsers successfully added!\n\n";
+    return;
 }
