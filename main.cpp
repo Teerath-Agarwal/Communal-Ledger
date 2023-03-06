@@ -8,7 +8,7 @@ int main()
     cout<<"1. Open existing Ledgers\n2. Create new Ledger\n3. Exit\n-> ";
     cin>>z;
     cin.ignore((numeric_limits<streamsize>::max)(),'\n');
-    string led_name,mem_path,pw;
+    string led_name,mem_path,led_path,pw;
     ifstream inp;
     switch (z){
         case 3:
@@ -18,9 +18,10 @@ int main()
         case 2: 
             cout<<"Enter a name for the Ledger: ";
             getline(cin,led_name);
-            system(to_char("touch .data/" + led_name + ".cld"));
+            led_path = ".data/" + led_name + ".cld";
+            mem_path = ".data/."+ led_name + ".mem";
+            system(to_char("touch " + led_path));
             pw = new_pass();
-            mem_path = ".data/."+led_name+".mem";
             inp.open(mem_path);
             enc_algo1(inp,mem_path,pw);
             add_new_mem(mem_path,pw);
@@ -32,7 +33,9 @@ int main()
             cout<<"-> ";
             cin>>z;
             led_name = fl[z-1];
-            if (!input_pass(".data/" + led_name + ".cld",pw)) {
+            led_path = ".data/" + led_name + ".cld";
+            mem_path = ".data/."+ led_name + ".mem";
+            if (!input_pass(led_path,pw)) {
                 main();
                 return 0;
             }
@@ -40,10 +43,8 @@ int main()
     }
     cout<<'\n'<<led_name<<" is now open.\n\n";
 
-    vector<transaction> t;
-    vector<member> x;
-    read_mem(x);
-    read_trans(t);
+    vector<member> x = read_<member>(mem_path);
+    vector<transaction> t = read_<transaction>(led_path);
 
     while(1)
     {

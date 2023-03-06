@@ -61,30 +61,18 @@ int get_digits(int num, int st)
     return num;
 }
 
-void read_trans(vector<transaction> &t)
+template <typename T> vector<T> read_(string path)
 {
+    vector<T> t;
     ifstream k;
-    k.open("Ledger.dat");
+    k.open(path);
     while (!k.eof())
     {
-        transaction temp(k);
+        T temp(k);
         t.push_back(temp);
     }
     k.close();
-    return;
-}
-
-void read_mem(vector<member> &t)
-{
-    ifstream k;
-    k.open("Members.dat");
-    while (!k.eof())
-    {
-        member temp(k);
-        t.push_back(temp);
-    }
-    k.close();
-    return;
+    return t;
 }
 
 void print_ledger(vector<transaction> t)
@@ -182,7 +170,7 @@ void add_new_mem(string mem_path, string pw){
         getline(filedat,t);
         users_set.insert(t);
     }
-    cout<<"Enter the number of members you want to add (may change later):\n";
+    cout<<"Enter the number of members (max length 10) you want to add (may change later):\n";
     int z;
     cin>>z;
     cout<<"Enter the names one by one:\n";

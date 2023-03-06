@@ -42,9 +42,7 @@ int digit(int x);
 
 int get_digits(int num, int st);
 
-void read_trans(vector<transaction> &t);
-
-void read_mem(vector<member> &t);
+template <typename T> vector<T> read_(string path);
 
 void print_ledger(vector<transaction> t);
 
