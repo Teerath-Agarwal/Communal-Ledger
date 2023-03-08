@@ -25,18 +25,37 @@ transaction::transaction(istream &k){
 
 transaction::transaction(vector<member> &k, int tn){
     int t;
+    auto check_validity = [&] (int &v, int ub) {
+        cin>>v;
+        char c;
+        while (v>ub || v<1){
+            cout<<"Out of bound data, try again? (Y) Discard? (N) -> ";
+            cin.ignore((numeric_limits<streamsize>::max)(),'\n');
+            cin>>c;
+            if (c=='N' || c=='n') {
+                cout<<"\n\n";
+                sno = -1;
+                return;
+            }
+            cout<<"Enter value -> ";
+            cin>>v;
+        }
+    };
     sno = tn+1;
     cout<<"Date in DDMMYY format: ";
     cin >> date;
     cout<<"Transaction Amount: ";
-    cin >> amount;
+    check_validity(amount,99999);
+    if (sno<0) return;
     for (int i=0; i<k.size(); i++)
-    cout<<(i+1)<<". "<<k[i].name<<"    ";
+        cout<<(i+1)<<". "<<k[i].name<<"    ";
     cout<<"\nCreditor: ";
-    cin >> t;
+    check_validity(t,k.size());
+    if (sno<0) return;
     creditor = k[t-1].name;
     cout<<"Debtor: ";
-    cin >> t;
+    check_validity(t,k.size());
+    if (sno<0) return;
     debtor = k[t-1].name;
 }
 
@@ -105,11 +124,12 @@ void print_ledger(vector<transaction> &t)
 void newentry(transaction &n, string path, string pw)
 {
     ifstream inp(path);
+    set_tc(inp);
     string dec = decrypt(decrypt(inp,pw+str_code),pw);
     remove(to_char(path));
     ofstream k(path);
     k << dec;
-    k.open(path, ios::app);
+    // k.open(path, ios::app);
     k<<"\n"<<n.sno<<" ";
     k<<n.date<<" ";
     k<<n.creditor<<" ";
@@ -130,10 +150,11 @@ int mem_ind(vector<member> &k, string s)
 
 void to_settle(vector<member> &k, vector<transaction> &t)
 {
-    for (int i=0; i<t.size(); i++)
-    {
-        k[mem_ind(k,t[i].creditor)].money -= t[i].amount;
-        k[mem_ind(k,t[i].debtor)].money += t[i].amount;
+    for (auto &i:k) i.money = 0;
+
+    for (auto &i:t){
+        k[mem_ind(k,i.creditor)].money -= i.amount;
+        k[mem_ind(k,i.debtor)].money += i.amount;
     }
 
     cout<<"\nTransactions to be settled are:\n";
@@ -158,6 +179,7 @@ void to_settle(vector<member> &k, vector<transaction> &t)
 
 vector<string> add_new_mem(string mem_path, string pw){
     ifstream inp(mem_path);
+    set_tc(inp);
     string dec = decrypt(decrypt(inp,pw+str_code),pw);
     vector<string> users;
     set<string> users_set;
@@ -170,7 +192,7 @@ vector<string> add_new_mem(string mem_path, string pw){
     cout<<"Enter the number of members you want to add (may change later):\n-> ";
     int z;
     cin>>z;
-    cout<<"Enter the names (max length 10) one by one:\n";
+    if (z>0) cout<<"Enter the names (max length 10) one by one:\n";
     string name;
     for (int i=1; i<=z; i++){
         cout<<i<<".) ";
@@ -209,7 +231,6 @@ template <typename T> vector<T> read_(string path, string pw){
         T temp(k);
         t.push_back(temp);
     }
-    t.pop_back();
     return t;
 }
 

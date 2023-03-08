@@ -30,14 +30,18 @@ int main()
             break;
         default:
             auto fl = file_list();
-            cout<<"Select a ledger to open:\n";
-            for (int i=1; i<=fl.size(); i++) cout<<i<<". "<<fl[i-1]<<'\n';
-            cout<<"-> ";
-            cin>>z;
+            if (fl.size()>1){
+                cout<<"Select a ledger to open:\n";
+                for (int i=1; i<=fl.size(); i++) cout<<i<<". "<<fl[i-1]<<'\n';
+                cout<<"-> ";
+                cin>>z;
+            }
+            else z = 1;
             led_name = fl[z-1];
             led_path = ".data/" + led_name + ".cld";
             mem_path = ".data/."+ led_name + ".mem";
             if (!input_pass(led_path,pw)) {
+                system(clr);
                 main();
                 return 0;
             }
@@ -46,32 +50,34 @@ int main()
     cout<<'\n'<<led_name<<" is now open.\n\n";
 
     vector<member> x = read_<member>(mem_path, pw);
+    x.pop_back();
     vector<transaction> t = read_<transaction>(led_path, pw);
 
     while(1)
     {
+        slp;
         cout<<"1. Enter a new transaction\n2. Display all transactions\n3. Display amount to be settled\n4. Add new members\n5. Exit\n-> ";
         cin>>z;
 
-        if(z==1)
-        {
-            cout<<endl;
-            transaction n(x,t.size());
-            t.push_back(n);
-            newentry(n,led_path,pw);
-            z=2;
-        }
         switch (z)
         {
+            case 1:{
+                cout<<endl;
+                if (x.size() < 2) {
+                    cout<<"There must be at least 2 members for a transaction!\n";
+                    break;
+                }
+                transaction n(x,t.size());
+                if (n.sno<0) break;
+                t.push_back(n);
+                newentry(n,led_path,pw);
+            }
             case 2:
                 print_ledger(t);
             case 3:
                 to_settle(x,t);
                 break;
-            case 4:{
-                    // auto new_mems = add_new_mem(mem_path,pw);
-                    // for (auto &nm:new_mems) x.push_back(member(nm));
-                }
+            case 4:
                 for (auto nm:add_new_mem(mem_path,pw)) x.push_back(member(nm));
                 break;
             default:
