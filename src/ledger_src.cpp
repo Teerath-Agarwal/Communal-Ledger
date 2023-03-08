@@ -49,11 +49,11 @@ transaction::transaction(vector<member> &k, int tn){
     if (sno<0) return;
     for (int i=0; i<k.size(); i++)
         cout<<(i+1)<<". "<<k[i].name<<"    ";
-    cout<<"\nCreditor: ";
+    cout<<"\nCreditor (will owe): ";
     check_validity(t,k.size());
     if (sno<0) return;
     creditor = k[t-1].name;
-    cout<<"Debtor: ";
+    cout<<"Debtor (will get): ";
     check_validity(t,k.size());
     if (sno<0) return;
     debtor = k[t-1].name;
