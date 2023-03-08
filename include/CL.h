@@ -11,7 +11,7 @@
 #include <string>
 #include <array>
 #include <set>
-#include "Encryption-Software/ES.h"
+#include "ES.h"
 using namespace std;
 
 class member

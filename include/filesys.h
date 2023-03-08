@@ -2,7 +2,7 @@
 #define FS_H
 
 #include "CL.h"
-#include "Encryption-Software/ES.h"
+#include "ES.h"
 
 #ifdef _WIN32
 #define pc _pclose
