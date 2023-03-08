@@ -188,10 +188,31 @@ vector<string> add_new_mem(string mem_path, string pw){
     remove(to_char(mem_path));
     outp.open(mem_path);
     outp << dec;
-    for (auto u:users) outp<<'\n'<<u;
+    for (auto u:users)
+    outp<<u<<'\n';
     outp.close();
     inp.open(mem_path);
     enc_algo1(inp,mem_path,pw);
     cout<<"\nUsers successfully added!\n\n";
     return users;
 }
+
+template <typename T> vector<T> read_(string path, string pw){
+    vector<T> t;
+    ifstream inp;
+    inp.open(path);
+    set_tc(inp);
+    string dec = decrypt(decrypt(inp,pw+str_code),pw);
+    stringstream k(dec);
+    while (!k.eof())
+    {
+        T temp(k);
+        t.push_back(temp);
+    }
+    t.pop_back();
+    return t;
+}
+
+template vector<member> read_<member>(string path, string pw);
+
+template vector<transaction> read_<transaction>(string path, string pw);

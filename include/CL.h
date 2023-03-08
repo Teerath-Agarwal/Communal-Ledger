@@ -53,19 +53,6 @@ void to_settle(vector<member> &k, vector<transaction> &t);
 
 vector<string> add_new_mem(string s, string pw);
 
-template <typename T> vector<T> read_(string path, string pw)
-{
-    vector<T> t;
-    ifstream inp;
-    inp.open(path);
-    string dec = decrypt(decrypt(inp,pw+str_code),pw);
-    stringstream k(dec);
-    while (!k.eof())
-    {
-        T temp(k);
-        t.push_back(temp);
-    }
-    return t;
-}
+template <typename T> vector<T> read_(string path, string pw);
 
 #endif

@@ -14,6 +14,7 @@ string exec(const char* cmd) {
 }
 
 string remove_ext(string s){
+    if (s.empty()) return s;
     int n = s.size();
     n--;
     while (n && s[n]!='.') n--;
