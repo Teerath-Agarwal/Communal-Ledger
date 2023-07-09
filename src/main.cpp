@@ -52,6 +52,8 @@ int main()
     vector<member> x = read_<member>(mem_path, pw);
     x.pop_back();
     vector<transaction> t = read_<transaction>(led_path, pw);
+    if (z==2)
+    t.pop_back();
 
     while(1)
     {
